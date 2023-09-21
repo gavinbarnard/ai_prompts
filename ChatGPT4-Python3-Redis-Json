@@ -1,0 +1,25 @@
+The redis module of python does indeed now support a json() function from redis.Redis objects.
+
+The following functions and examples of usages below demonstrate how it works.
+
+Each function will use a format of key, json_path,  where key is the key to retrieve from redis, and the json_path is a jq style path indicating the location of the json data structure to retrieve.  A json_path of "." is the entire json object.   Whereas ".example[0]"  will retrieve the zero index list entry of the field example of a json struct such as ' {"example":[1,2]} '
+
+Get  - get a key's value, or sub dictionary value based on json_path
+
+.json().get(key, json_path)
+
+Set - set a key's value, or sub dictionary value based on json_path, new entries must always be "."
+
+.json().set(key, json_path, data)
+
+Append array - add the pass data object to the end of an array, If the json_path is "." the entire object must already be a list, elsewise the json_path should point to the specific dictionary field that is contains the list to be appended.
+
+.json().arrappend(key, json_path, data)
+
+Pop array - remove an item from a list at the specific index.  The removed item is returned as a value.
+
+.json().arrpop(key, json_path, index)
+
+Get length of an array 
+
+.json().arrlen(key, json_path)
